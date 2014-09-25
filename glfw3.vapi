@@ -180,14 +180,14 @@ namespace GLFW {
 	public delegate void MonitorFunc (Monitor monitor, int event);
 
 	[Compact]
-	[CCode (cname = "GLFWmonitor")]
+	[CCode (cname = "GLFWmonitor", free_function = "")]
 	public class Monitor {
 		public string name {
 			[CCode (cname = "glfwGetMonitorName")]
 			get;
 		}
 
-		public unowned GammaRamp gamma_ramp {
+		public unowned GammaRamp? gamma_ramp {
 			[CCode (cname = "glfwGetGammaRamp")]
 			get;
 			[CCode (cname = "glfwSetGammaRamp")]
@@ -199,12 +199,12 @@ namespace GLFW {
 			set;
 		}
 
-		public GLFW.VideoMode[] video_modes {
+		public unowned GLFW.VideoMode[]? video_modes {
 			[CCode (cname="glfwGetVideoModes", array_length_pos = 0.5)]
 			get;
 		}
 
-		public GLFW.VideoMode video_mode {
+		public unowned GLFW.VideoMode? video_mode {
 			[CCode (cname="glfwGetVideoMode")]
 			get;
 		}
@@ -217,10 +217,10 @@ namespace GLFW {
 	}
 
 	[CCode (cname = "glfwGetMonitors")]
-	public Monitor[]? get_monitors ();
+	public unowned Monitor[]? get_monitors ();
 
 	[CCode (cname = "glfwGetPrimaryMonitor")]
-	public Monitor? get_primary_monitor ();
+	public unowned Monitor? get_primary_monitor ();
 
 	[CCode (cname = "GLFWwindowclosefun", has_target = false)]
 	public delegate void WindowCloseFunc (Window window);
@@ -365,6 +365,7 @@ namespace GLFW {
 
 
 	[Compact]
+	[CCode (cname = "GLFWgammaramp", free_function = "")]
 	public class GammaRamp {
 		[CCode (array_length_cname = "size")]
 		ushort[] red;
@@ -374,17 +375,18 @@ namespace GLFW {
 		ushort[] blue;
 	}
 
-	[CCode (cname = "GLFWvidmode", has_type_id = false)]
-	public struct VideoMode {
-		[CCode (cname = "Width")]
+	[Compact]
+	[CCode (cname = "GLFWvidmode", free_function = "")]
+	public class VideoMode {
+		[CCode (cname = "width")]
 		public int width;
-		[CCode (cname = "Height")]
+		[CCode (cname = "height")]
 		public int height;
-		[CCode (cname = "RedBits")]
+		[CCode (cname = "redBits")]
 		public int red_bits;
-		[CCode (cname = "GreenBits")]
+		[CCode (cname = "greenBits")]
 		public int green_bits;
-		[CCode (cname = "BlueBits")]
+		[CCode (cname = "blueBits")]
 		public int blue_bits;
 	}
 
@@ -467,7 +469,7 @@ namespace GLFW {
 		public unowned uchar[]? get_buttons ();
 
 		[CCode (cname = "glfwGetJoystickAxes")]
-		public unowned float[] get_axes ();
+		public unowned float[]? get_axes ();
 
 		[CCode (cname = "glfwGetJoystickName")]
 		public string get_name ();
