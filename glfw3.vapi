@@ -200,7 +200,7 @@ namespace GLFW {
 		}
 
 		public unowned GLFW.VideoMode[]? video_modes {
-			[CCode (cname="glfwGetVideoModes", array_length_pos = 0.5)]
+			[CCode (cname="glfwGetVideoModes")]
 			get;
 		}
 
@@ -375,9 +375,8 @@ namespace GLFW {
 		ushort[] blue;
 	}
 
-	[Compact]
-	[CCode (cname = "GLFWvidmode", free_function = "")]
-	public class VideoMode {
+	[CCode (cname = "GLFWvidmode", has_type_id = false)]
+	public struct VideoMode {
 		[CCode (cname = "width")]
 		public int width;
 		[CCode (cname = "height")]
